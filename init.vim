@@ -23,11 +23,35 @@ filetype on          " Detect and set the filetype option and trigger the FileTy
 filetype plugin on   " Load the plugin file for the file type, if any
 filetype indent on   " Load the indent file for the file type, if any
 
-" Remaps "
-nmap <C-s> :w!<cr>
+" Remaps """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" nmap <C-s> :w!<cr>
 nmap <space>qq :q!<cr>
+nmap<C-s> <cmd>w<cr><esc>
+vmap<C-s> <cmd>w<cr><esc>
+smap<C-s> <cmd>w<cr><esc>
+nmap<C-s> <cmd>w<cr><esc>
 
-" Autocmds "
+" Move to window using the <ctrl> hjkl keys
+nmap <C-h> <C-w>h
+nmap <C-j> <C-w>j
+nmap <C-k> <C-w>k
+nmap <C-l> <C-w>l
+
+" Resize window using <ctrl> arrow keys
+nmap <C-Up> <cmd>resize +2<cr>
+nmap <C-Down> <cmd>resize -2<cr>
+nmap <C-Left> <cmd>vertical resize -2<cr>
+nmap <C-Right> <cmd>vertical resize +2<cr>
+
+" Buffers
+nmap <S-h> <cmd>bprevious<cr>
+nmap <S-l> <cmd>bnext<cr>
+
+" Create Close Files
+nmap <space>n <cmd>enew<cr>
+nmap <space>c <C-W>c
+
+" Autocmds """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 function! HighlightLightWordUnderCursor()
     if getline(".")[col("."-1)] !~# '[[:punct:][:blank:]]'
         exec 'match' 'Search' '/\v\<'.expand('<cword>').'\>/'
@@ -38,7 +62,7 @@ endfunction
 
 autocmd! CursorHold, CursorHoldI * call HighlightWordUnderCursor()
 
-" Plugins "
+" Plugins """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 call plug#begin()
    Plug 'dracula/vim', { 'as': 'dracula' }
    Plug 'vim-airline/vim-airline'
@@ -48,31 +72,57 @@ call plug#begin()
    Plug 'nvim-lua/plenary.nvim'  "NEEDS RIPGREP AND FD"
    Plug 'nvim-telescope/telescope.nvim'
    Plug 'ryanoasis/vim-devicons'
-   Plug 'jiangmiao/auto-pairs'	   
+   Plug 'jiangmiao/auto-pairs'
    Plug 'neoclide/coc.nvim', {'branch': 'release'}
    Plug 'sheerun/vim-polyglot'
+   Plug 'dense-analysis/ale'
+   Plug 'honza/vim-snippets'
 call plug#end()
 
-" Themes "
+" Themes """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 colorscheme dracula
 
-" NERDtree"
+" NERDtree"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let NERDTreeMinimalUI = 1
+let NERDTreeDirArrows = 1
+let NERDTreeAutoDeleteBuffer = 1
 nnoremap <space>e :NERDTreeToggle<cr>
 
-" Airline "
+" Close the tab if NERDTree is the only window remaining in it.
+autocmd BufEnter * if winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | quit | endif
+
+" If another buffer tries to replace NERDTree, put it in the other window, and bring back NERDTree.
+autocmd BufEnter * if bufname('#') =~ 'NERD_tree_\d\+' && bufname('%') !~ 'NERD_tree_\d\+' && winnr('$') > 1 |
+    \ let buf=bufnr() | buffer# | execute "normal! \<C-W>w" | execute 'buffer'.buf | endif
+
+" Airline """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let g:airline_theme = 'dracula'
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#formatter = 'unique_tail'
 let g:airline_section_y = 0
 let g:airline_section_z = 0
 
-" Telescope "
+" Telescope """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 nnoremap <space>ff <cmd>Telescope find_files<cr>
 nnoremap <space>fg <cmd>Telescope live_grep<cr>
 nnoremap <space>fb <cmd>Telescope buffers<cr>
 nnoremap <space>fh <cmd>Telescope help<cr>
 
+" ALE """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let g:ale_linters = {
+\}
+
+let g:ale_fixers = {
+\   '*': ['trim_whitespace'],
+\}
+
+let g:ale_fix_on_save = 1
+
 " COC configuration """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+"Installed coc-json and coc-tsserver
+
+let g:coc_global_extensions=[ 'coc-snippets', 'coc-omnisharp', 'coc-pyright', 'coc-r-lsp', 'coc-markdownlint', 'coc-tsserver', 'coc-json', 'coc-html' ]
 
 " Use tab for trigger completion with characters ahead and navigate
 " NOTE: There's always complete item selected by default, you may want to enable
