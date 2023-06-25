@@ -77,6 +77,7 @@ call plug#begin()
    Plug 'sheerun/vim-polyglot'
    Plug 'dense-analysis/ale'
    Plug 'honza/vim-snippets'
+   Plug 'jalvesaq/Nvim-R'
 call plug#end()
 
 " Themes """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
