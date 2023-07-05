@@ -127,7 +127,13 @@ require('lazy').setup({
     },
     build = ':TSUpdate',
   },
-
+  {
+    'nvim-tree/nvim-tree.lua',
+    lazy = true,
+    dependencies = {
+      'nvim-tree/nvim-web-devicons',
+    }
+  },
   { import = 'custom.plugins' },
 }, {})
 
@@ -149,6 +155,8 @@ vim.o.timeout = true
 vim.o.timeoutlen = 300
 vim.o.completeopt = 'menuone,noselect'
 vim.o.termguicolors = true
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
 -- Keymaps for better default experience
 -- See `:help vim.keymap.set()`
 vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
@@ -497,3 +505,35 @@ require('lualine').setup {
       inactive_winbar = {},
       extensions = {}
     }
+
+require("nvim-tree").setup({
+  renderer = {
+    icons = {
+      show = {
+        git = true,
+	file = false,
+	folder = false,
+	folder_arrow = true,
+      },
+      glyphs = {
+        folder = {
+          arrow_closed = "⏵",
+          arrow_open = "⏷",
+        },
+        git = {
+          unstaged = "✗",
+          staged = "✓",
+          unmerged = "⌥",
+          renamed = "➜",
+          untracked = "★",
+          deleted = "⊖",
+          ignored = "◌",
+        },
+      },
+    },
+  },
+})
+
+-- Mappings for nvim-tree
+vim.keymap.set('n', '<leader>e', '<cmd>NvimTreeToggle<cr>', { desc = 'Toggle nvim-tree' })
+-- vim.keymap.set('n', '<leader>f', '', { desc = 'find files in nvim-tree' })
