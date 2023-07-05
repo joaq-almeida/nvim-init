@@ -134,6 +134,11 @@ require('lazy').setup({
       'nvim-tree/nvim-web-devicons',
     }
   },
+  {
+    'akinsho/bufferline.nvim',
+    version = "*",
+    dependencies = 'nvim-tree/nvim-web-devicons'
+  },
   { import = 'custom.plugins' },
 }, {})
 
@@ -537,3 +542,14 @@ require("nvim-tree").setup({
 -- Mappings for nvim-tree
 vim.keymap.set('n', '<leader>e', '<cmd>NvimTreeToggle<cr>', { desc = 'Toggle nvim-tree' })
 -- vim.keymap.set('n', '<leader>f', '', { desc = 'find files in nvim-tree' })
+
+-- Config bufferline
+require("bufferline").setup{
+    options = {
+        hover = {
+            enabled = true,
+            delay = 150,
+            reveal = {'close'}
+        }
+    }
+}
