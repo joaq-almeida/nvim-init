@@ -134,6 +134,7 @@ require('lazy').setup({
 -- [[ Setting options ]]
 -- See `:help vim.o`
 -- NOTE: You can change these options as you wish!
+vim.o.showmode= false
 vim.o.hlsearch = false
 vim.wo.number = true
 vim.o.mouse = 'a'
