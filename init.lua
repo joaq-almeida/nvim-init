@@ -78,10 +78,11 @@ require('lazy').setup({
 
   {
     -- Theme inspired by Atom
-    'navarasu/onedark.nvim',
+    -- 'navarasu/onedark.nvim',
+    'sainnhe/sonokai',
     priority = 1000,
     config = function()
-      vim.cmd.colorscheme 'onedark'
+      vim.cmd.colorscheme 'sonokai'
     end,
   },
 
