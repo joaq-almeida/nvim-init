@@ -2,4 +2,4 @@
 
 This is my nvim configuration file.
 
-Fell free to use it!
+Feel free to use it!
