@@ -1,3 +1,13 @@
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""               
+"               
+"               ██╗   ██╗██╗███╗   ███╗██████╗  ██████╗
+"               ██║   ██║██║████╗ ████║██╔══██╗██╔════╝
+"               ██║   ██║██║██╔████╔██║██████╔╝██║     
+"               ╚██╗ ██╔╝██║██║╚██╔╝██║██╔══██╗██║     
+"                ╚████╔╝ ██║██║ ╚═╝ ██║██║  ██║╚██████╗
+"                 ╚═══╝  ╚═╝╚═╝     ╚═╝╚═╝  ╚═╝ ╚═════╝
+"               
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""  
 """""""""""""""""""""""""""""""""""""""""""""
 " GLOBAL SETTINGS
 """""""""""""""""""""""""""""""""""""""""""""
@@ -26,25 +36,63 @@ filetype on          " Detect and set the filetype option and trigger the FileTy
 filetype plugin on   " Load the plugin file for the file type, if any
 filetype indent on   " Load the indent file for the file type, if any
 
-
 """""""""""""""""""""""""""""""""""""""""""""
 " PLUGINS SETTING
 """""""""""""""""""""""""""""""""""""""""""""
 
-" call plug#begin()
+call plug#begin()
  " Here goes the plugins
-"  Plug 'sainhe/sonokai'
-" call plug#end()
+ Plug 'junegunn/fzf.vim'
+ Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+ Plug 'jalvesaq/Nvim-R'
+ Plug 'sheerun/vim-polyglot'
+ Plug 'preservim/nerdtree'
+ Plug 'jiangmiao/auto-pairs'
+ Plug 'itchyny/lightline.vim'
+ Plug 'numToStr/Comment.nvim' 
+ Plug 'itchyny/vim-gitbranch'
+call plug#end()
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Status Line
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let g:lightline = {
+      \ 'colorscheme': 'powerline',
+      \ 'active': {
+      \   'left': [ [ 'mode', 'paste' ],
+      \             [ 'gitbranch', 'readonly', 'filename', 'modified' ] ]
+      \ },
+      \ 'component_function': {
+      \   'gitbranch': 'gitbranch#name'
+      \ },
+      \ }
+
+" Always show statusline
+set laststatus=2
+
+" Uncomment to prevent non-normal modes showing in powerline and below powerline.
+set noshowmode
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => NERDTree
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let g:NERDTreeDirArrowExpandable = '►'
+let g:NERDTreeDirArrowCollapsible = '▼'
+let NERDTreeShowLineNumbers=1
+let NERDTreeShowHidden=1
+let NERDTreeMinimalUI = 1
 
 """""""""""""""""""""""""""""""""""""""""""""
 " MAPPING SETTINGS
 """""""""""""""""""""""""""""""""""""""""""""
 
-" move line or visually selected block - alt+j/k
-inoremap <A-j> <Esc>:m .+1<CR>==gi
-inoremap <A-k> <Esc>:m .-2<CR>==gi
-vnoremap <A-j> :m '>+1<CR>gv=gv
-vnoremap <A-k> :m '<-2<CR>gv=gv
+" Open terminal inside Vim
+map <space>tt :vnew term://bash<CR>
+
+" Split windows
+map <space>3 :vsplit<CR>
+map <space>2 :split<CR>
+map <space>0 :bdelete<CR>
 
 " move split panes to left/bottom/top/right
 nnoremap <A-h> <C-W>H
@@ -58,13 +106,32 @@ nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
 
-" Press i to enter insert mode, and ii to exit insert mode.
-inoremap ii <Esc>
-inoremap jk <Esc>
-inoremap kj <Esc>
-vnoremap jk <Esc>
-vnoremap kj <Esc>
+" Some keys to exit insert and visual mode.
+inoremap qq <Esc>
+vnoremap qq <Esc>
 
 " Remaps for saving and quitting Vim
 nmap <C-s> :w!<cr>
 nmap <space>qq :q!<cr>
+
+" PLUGIN: FZF mappings
+nnoremap <silent> <space>b :Buffers<CR>
+nnoremap <silent> <space>f :Files<CR>
+nnoremap <silent> <space>g :Commits<CR>
+nnoremap <silent> <space>H :Helptags<CR>
+nnoremap <silent> <space>hh :History<CR>
+" nnoremap <silent> <space>h: :History:<CR>
+" nnoremap <silent> <space>h/ :History/<CR> 
+
+" NERDTree mappings
+nmap <space>e :NERDTreeToggle<CR>
+
+" Make adjusing split sizes a bit more friendly
+noremap <silent> <A-Left> :vertical resize +3<CR>
+noremap <silent> <A-Right> :vertical resize -3<CR>
+noremap <silent> <A-Up> :resize +3<CR>
+noremap <silent> <A-Down> :resize -3<CR>
+
+
+" Nvim-R remaps for better ergonomics
+
