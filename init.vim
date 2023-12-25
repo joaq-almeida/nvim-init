@@ -1,4 +1,4 @@
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""               
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""               
 "               
 "               ██╗   ██╗██╗███╗   ███╗██████╗  ██████╗
 "               ██║   ██║██║████╗ ████║██╔══██╗██╔════╝
@@ -51,7 +51,14 @@ call plug#begin()
  Plug 'itchyny/lightline.vim'
  Plug 'numToStr/Comment.nvim' 
  Plug 'itchyny/vim-gitbranch'
+ Plug 'ellisonleao/gruvbox.nvim'
 call plug#end()
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => gruvbox theme 
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+set background=dark
+colorscheme gruvbox
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Status Line
@@ -86,15 +93,24 @@ let NERDTreeMinimalUI = 1
 " MAPPING SETTINGS
 """""""""""""""""""""""""""""""""""""""""""""
 
+let mapleader = " "
+let maplocalleader = " "
+
+" Some keys to exit insert and visual mode.
+inoremap qq <Esc>
+vnoremap qq <Esc>
+tnoremap qq <Esc> <C-\><C-n> 
+
+
 " Open terminal inside Vim
 map <space>tt :vnew term://bash<CR>
 
 " Split windows
 map <space>3 :vsplit<CR>
 map <space>2 :split<CR>
-map <space>0 :bdelete<CR>
+map <space>k :bdelete<CR>
 
-" move split panes to left/bottom/top/right
+" move panes to left/bottom/top/right
 nnoremap <A-h> <C-W>H
 nnoremap <A-j> <C-W>J
 nnoremap <A-k> <C-W>K
@@ -106,10 +122,6 @@ nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
 
-" Some keys to exit insert and visual mode.
-inoremap qq <Esc>
-vnoremap qq <Esc>
-
 " Remaps for saving and quitting Vim
 nmap <C-s> :w!<cr>
 nmap <space>qq :q!<cr>
@@ -120,8 +132,6 @@ nnoremap <silent> <space>f :Files<CR>
 nnoremap <silent> <space>g :Commits<CR>
 nnoremap <silent> <space>H :Helptags<CR>
 nnoremap <silent> <space>hh :History<CR>
-" nnoremap <silent> <space>h: :History:<CR>
-" nnoremap <silent> <space>h/ :History/<CR> 
 
 " NERDTree mappings
 nmap <space>e :NERDTreeToggle<CR>
@@ -131,7 +141,4 @@ noremap <silent> <A-Left> :vertical resize +3<CR>
 noremap <silent> <A-Right> :vertical resize -3<CR>
 noremap <silent> <A-Up> :resize +3<CR>
 noremap <silent> <A-Down> :resize -3<CR>
-
-
-" Nvim-R remaps for better ergonomics
 
